@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+  	<style>
+  	body{
+	background-color:#b0c4de;
+	}
+	h1{
+	background-color:#6495ed;
+	}
+	div{
+	background-color:#b0c4de;
+	}
+	p.serif{font-family:"Times New Roman",Times,serif;}
+	p.sansserif{font-family:Arial,Helvetica,sans-serif;}
+	</style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
   </head>
@@ -12,16 +25,24 @@
       <div class="row" ng-controller="ListingsController">
         <div class="col-md-6">
           <div class="input-group" id="searchBar">
+          	
             <!-- 
 
                 Implement a way to filter through listings using the search bar 
-
+           
               -->
             <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
-            <input type="text" class="form-control" placeholder="Search">
-          </div>
+            <input type="text" class="form-control" ng-model="query" placeholder="Search" autofocus/>
+        	</div>
+            <ul class="data-ctrl">
+                <li ng-repeat="row in listings | filter:query">
+                    {{row.code+"-"+row.name}}
+                </li>
+            </ul>
+        
+            
           <div class="tableWrapper">
-            <table class="table table-striped table-hover">
+            <table id="myTable" class="table table-striped table-hover">
               <tr>
                 <th>Code</th>
                 <th>Building Name</th>
@@ -34,6 +55,12 @@
                       * include a way to remove individual listings
 
                 --> 
+                <tr ng-repeat="x in listings" ng-click="showDetails(x.name)">
+                	<td>{{ x.code }}</td>
+                	<td>{{ x.name }}</td>
+                	<td><input type="button" value="Remove" class="btn btn-primary" ng-click="deleteListing(x.name)"/></td>
+                </tr>
+
             </table>
           </div>
           <!-- 
@@ -41,6 +68,48 @@
               Write an HTML form that adds new listings to the directory 
 
             -->
+             <form class="form-horizontal" role="form" ng-submit="addListing()">
+				<div class="form-group">
+					<label class="col-md-4 control-label">Code</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" name="code"
+							ng-model="code" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">name</label>
+					<div class="col-md-4">
+					<input type="text" class="form-control" name="name"
+							ng-model="name" />
+				</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Coordinates.longitude</label>
+					<div class="col-md-4">
+					<input type="text" class="form-control" name="coordinates.longitude"
+							ng-model="coordinates.latitude" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Coordinates.longitude</label>
+					<div class="col-md-4">
+					<input type="text" class="form-control" name="coordinates.longitude"
+							ng-model="coordinates.longitude" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">address</label>
+					<div class="col-md-4">
+					<input type="text" class="form-control" name="address"
+							ng-model="address" />
+					</div>
+				</div>
+				<div class="form-group">								
+					<div style="padding-left:110px">
+					<input type="submit" value="Submit" class="btn btn-primary"/>
+				</div>
+				</div>
+				</form>
         </div>
         <div class="col-md-6">
           <div class="jumbotron">
@@ -51,6 +120,12 @@
                    * consider how to use ng-click within the the table to implement this feature
 
              -->
+             <p class="sansserif">Code: {{code_dis}} </p>
+             <p class="sansserif">Name: {{name_dis}} </p>
+             <p class="sansserif">Coordinates.latitude: {{data_dis.coordinates.latitude}} </p>
+             <p class="sansserif">Coordinates.longitude: {{data_dis.coordinates.longitude}} </p>
+             <p class="sansserif">Address: {{address_dis}} </p>
+
           </div>
         </div>
       </div>
