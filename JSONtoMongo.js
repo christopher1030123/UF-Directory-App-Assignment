@@ -10,7 +10,7 @@ var fs = require('fs'),
     config = require('./config');
 
 /* Connect to your database */
-mongoose.connect('mongodb://Xinxin0407:Wxx123456789@ds111496.mlab.com:11496/xinxin0407');
+mongoose.connect(config.db.uri);
 var db = mongoose.connection;
   db.on( 'error', console.error.bind( console, 'connection error:' ) );
 /* 
@@ -30,6 +30,7 @@ var db = mongoose.connection;
       new Listing(data.entries[i]).save();
     }
 });
+ mongoose.connection.close();
   
 /* 
   Once you've written + run the script, check out your MongoLab database to ensure that 
