@@ -1,3 +1,12 @@
+'use strict';
+var fs = require('fs'),
+    mongoose = require('mongoose'), 
+    Schema = mongoose.Schema, 
+    Listing = require('./ListingSchema.js'), 
+    config = require('./config');
+mongoose.connect(config.db.uri);
+var db = mongoose.connection;
+  db.on( 'error', console.error.bind( console, 'connection error:' ) );
 /* Fill out these functions using Mongoose queries*/
 var findLibraryWest = function() {
   /* 
