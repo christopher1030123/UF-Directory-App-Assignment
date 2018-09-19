@@ -21,16 +21,14 @@ var db = mongoose.connection;
      console.log("Connection succeeded.");
      var listingData = require( './listings.json' );
      Listing.find().remove();
-     console.log("Hello world");
      var data = fs.readFileSync('listings.json', 'utf8');
      data = JSON.parse(data);
-     console.log(data.entries.length);
      for(var i = 0; i < data.entries.length; i++) {
       //console.log("Hello world");
       new Listing(data.entries[i]).save();
     }
 });
- mongoose.connection.close();
+
   
 /* 
   Once you've written + run the script, check out your MongoLab database to ensure that 
