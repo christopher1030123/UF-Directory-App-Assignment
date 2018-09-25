@@ -14,8 +14,12 @@ angular.module('listings').controller('ListingsController', ['$scope', 'Listings
 	  *Save the article using the Listings factory. If the object is successfully 
 	  saved redirect back to the list page. Otherwise, display the error
 	 */
-      $scope.listings.push($scope.newListing);
-      $scope.newListing = {};
+      Listings.create($scope.newListing).then(function(){
+        $scope.listings.push($scope.newListing);
+        $scope.newListing = {};
+       }, function(error){
+        console.log('Unable to create listing:', error);
+       });
 
     };
 
@@ -25,7 +29,8 @@ angular.module('listings').controller('ListingsController', ['$scope', 'Listings
         Delete the article using the Listings factory. If the removal is successful, 
 		navigate back to 'listing.list'. Otherwise, display the error. 
        */
-        $scope.listings.splice(index, 1);
+       $scope.listings.splice(index, 1);
+       Listings.delete($scope.listings[index]._id);
     };
 
     $scope.showDetails = function(index) {
