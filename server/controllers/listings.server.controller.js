@@ -50,7 +50,7 @@ exports.update = function(req, res) {
   listing.save(function(err) {
     if(err) {
       console.log(err);
-      res.status(400).send(err);
+      res.status(404).send(err);
     } else {
       res.json(listing);
     }
@@ -62,7 +62,7 @@ exports.delete = function(req, res) {
   var listing = req.listing;
  listing.remove(function(err) {
     if(err) {
-      res.status(400).send(err);
+      res.status(404).send(err);
     }
     else {
       res.end();
